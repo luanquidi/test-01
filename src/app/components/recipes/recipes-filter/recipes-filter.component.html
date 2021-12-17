@@ -1,0 +1,51 @@
+<form class="row gy-2 gx-3 align-items-center my-5 rounded text-white" [formGroup]="form">
+    <h4 class="text-center mt-2">
+        Filtro de búsqueda
+    </h4>
+    <hr>
+    <div class="col-6">
+        <label for="keyword">Palabra Clave</label>
+        <input type="text" class="form-control" id="keyword" formControlName="keywordInput" placeholder="Ingresa una palabra clave, Ej: Pasta">
+    </div>
+
+    <div class="col-6">
+        <label for="typeInput">Categoría</label>
+        <select class="form-select" id="typeInput" name="type" formControlName="typeInput">
+            <option selected value="">Seleccione...</option>
+            <option [value]="type.id" *ngFor="let type of types">{{type.description}}</option>
+        </select>
+    </div>
+
+    <div class="col-6">
+        <label for="numberInput">Cantidad de Recetas (Tamaño)</label>
+        <input type="number" class="form-control" id="numberInput" formControlName="numberInput" placeholder="Ingresa una cantidad de recetas, Ej: 10   Rango: [10 - 30]" min="10" max="30">
+    </div>
+
+    <div class="col-6">
+        <label for="sortInput">Ordenar</label>
+        <select class="form-select" id="sortInput" name="sort" formControlName="sortInput">
+            <option selected value="">Seleccione...</option>
+            <option value="asc">Ascendente</option>
+            <option value="desc">Descendente</option>
+        </select>
+    </div>
+
+    <div class="col-12 my-4">
+        <label for="ingredient">Ingredientes</label>
+        <ng-multiselect-dropdown
+            formControlName="ingredientsInput"
+            placeholder="Seleccione los ingredientes"
+            [settings]="dropdownSettings"
+            [data]="ingredients"
+            [(ngModel)]="selectedItems" 
+        >
+        </ng-multiselect-dropdown>
+    </div>
+
+    <div class="col-12 mb-4">
+        <div class="d-grid gap-2">
+            <button class="btn btn-info" type="button" (click)="sendForm()">Buscar</button>
+        </div>
+    </div>
+    
+</form>

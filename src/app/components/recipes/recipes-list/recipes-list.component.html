@@ -1,0 +1,24 @@
+<h4 class="text-white">Total Resultados: {{ recipeService.totalResults }}</h4>
+<ul class="list-group mb-5">
+  <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let recipe of recipeService.recipes | paginate: { itemsPerPage: recipeService.number, currentPage: p, totalItems: recipeService.totalResults };">
+    <div class="d-flex align-items-center">
+        <img 
+          class="img-fluid img"
+          width="100"
+          [src]="recipe.image"
+          alt="Imagen receta"
+        >
+        <span>
+          {{ recipe.title }}
+        </span>
+    </div>
+    <div>
+      <button class="btn btn-info btn-sm" (click)="getInfoRecipe(recipe.id)">Ver Más</button>
+    </div>
+  </li>
+  <p class="text-center" *ngIf="recipeService.recipes.length == 0">Sin información.</p>
+</ul>
+
+<pagination-controls (pageChange)="changeStateTable($event)" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+
+<app-recipes-modal-detalle [recipe]="recipeSelected"></app-recipes-modal-detalle>

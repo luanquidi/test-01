@@ -1,0 +1,66 @@
+<div class="modal text-white" tabindex="-1" id="modalDetailRecipe">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ recipe.title }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="modalService.hideModal('modalDetailRecipe')"></button>
+            </div>
+            <div class="modal-body">
+                <div class="card">
+                    <img [src]="recipe.image" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <div class="text-secondary">
+                            <h5>Descripción:</h5>
+                        </div>
+                        <p class="card-text" [innerHtml]="recipe.summary | unescape">
+                        </p>
+
+
+                        <div class="text-secondary" *ngIf="recipe.analyzedInstructions">
+                            <h5>Preparacíon:</h5>
+                            <ol  class="text-white">
+                                <li  *ngFor="let step of recipe.analyzedInstructions[0]?.steps">
+                                    {{ step.step }}
+                                    <ul>
+                                        <li *ngFor="let ingredient of step.ingredients">
+                                            {{ ingredient.name }}
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ol>
+
+                        </div>
+
+
+                        <div class="d-grid gap-2">
+                            <a [href]="recipe.sourceUrl" class="btn btn-primary btn-block" target="_blank">Ir a la receta</a>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="text-secondary">
+                            <div class="d-flex justify-content-between">
+                                <h5>Recetas similares: </h5>
+                                <span *ngIf="!recipeService.seeMoreRecipes" style="text-decoration: underline;" (click)="seeMoreRecipesData()">Ver recetas similares.</span>
+                            </div>
+
+                            <ul class="list-group mb-5" *ngIf="recipeService.seeMoreRecipes">
+                                <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let similarRecipe of similarRecipes">
+                                    <div class="d-flex align-items-center">
+                                        <span>
+                                        {{ similarRecipe.title }}
+                                        </span>
+                                    </div>
+                                    <div>
+                                    <a [href]="similarRecipe.sourceUrl" class="btn btn-primary btn-sm" target="_blank">Ir a la receta</a>
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
